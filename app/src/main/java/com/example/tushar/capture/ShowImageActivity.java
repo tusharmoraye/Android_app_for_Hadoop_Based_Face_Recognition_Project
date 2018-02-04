@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.RecoverySystem;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,34 +18,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import org.apache.http.entity.mime.HttpEntity;
-
-//import org.apache.http.HttpEntity;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ShowImageActivity extends AppCompatActivity {
 
@@ -105,39 +86,6 @@ public class ShowImageActivity extends AppCompatActivity {
 
     }
 
-    void uploadMultipart() {
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        btImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-//        byte[] byteArrayVar = byteArrayOutputStream.toByteArray();
-//        final String ConvertImage = Base64.encodeToString(byteArrayVar, Base64.DEFAULT);
-//
-//        class AsyncTaskUploadClass extends AsyncTask<Void, Void, String> {
-//            @Override
-//            protected void onPreExecute() {
-//                super.onPreExecute();
-//                //progressBar
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String string1) {
-//                super.onPostExecute(string1);
-//            }
-//
-//            @Override
-//            protected String doInBackground(Void ... params) {
-//                ImageProcessClass imageProcessClass = new ImageProcessClass();
-//                HashMap<String, String> HashMapParams = new HashMap<>();
-//                HashMapParams.put("image_string", ConvertImage);
-//                String FinalData = imageProcessClass.ImageHttpRequest(ServerUploadPath, HashMapParams);
-//                return FinalData;
-//            }
-//        }
-//
-//        AsyncTaskUploadClass AsyncTaskUploadClassOBJ = new AsyncTaskUploadClass();
-//        AsyncTaskUploadClassOBJ.execute();
-
-    }
-
     /**
      * Uploading the file to server
      * */
@@ -190,7 +138,6 @@ public class ShowImageActivity extends AppCompatActivity {
                 entity.addPart("image", new FileBody(sourceFile));
 
                 // Extra parameters if you want to pass to server
-                //entity.addPart("website", new StringBody("www.androidhive.info"));
                 //entity.addPart("email", new StringBody("abc@gmail.com"));
 
                 totalSize = (int)entity.getContentLength();
@@ -248,20 +195,3 @@ public class ShowImageActivity extends AppCompatActivity {
     }
 
 }
-
-
-
-
-/*
-File image = "....";
-FileBody fileBody = new FileBody(image);
-MultipartEntityBuilder builder = MultipartEntityBuilder.create()
-                         .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
-                         .addTextBody("params", "{....}")
-                         .addPart("my_file", fileBody);
-HttpEntity multiPartEntity = builder.build();
-
-String url = "....";
-HttpPost httpPost = new HttpPost(url);
-httpPost.setEntity(multiPartEntity);
- */

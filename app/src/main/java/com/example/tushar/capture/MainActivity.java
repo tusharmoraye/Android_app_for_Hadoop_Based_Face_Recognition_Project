@@ -1,16 +1,23 @@
 package com.example.tushar.capture;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -51,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
                 // Show only images, no videos or anything else
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
+                File file = null;
+                try {
+                    file = createImageFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
                 // Always show the chooser (if there are multiple options available)
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
@@ -73,8 +87,12 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
+
+            File imageFile = copyFileFromUri(getApplicationContext(), uri);
+
+
             Intent intent = new Intent(this, ShowImageActivity.class);
-            intent.putExtra("imageUri", uri.toString());
+            intent.putExtra("imageUri", Uri.fromFile(new File(storagePath.getAbsolutePath() + imageFileName)).toString());
             startActivity(intent);
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Intent intent = new Intent(this, ShowImageActivity.class);
@@ -82,4 +100,48 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    public String getRealPathFromURI(Uri contentUri) {
+
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(contentUri, projection, null, null, null);
+        if (cursor == null) return null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String s=cursor.getString(column_index);
+        cursor.close();
+        return s;
+    }
+
+    public File copyFileFromUri(Context context, Uri fileUri)
+    {
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        File outputFile = null;
+
+        try
+        {
+            ContentResolver content = context.getContentResolver();
+            inputStream = content.openInputStream(fileUri);
+
+            outputFile = createImageFile();
+            outputStream = new FileOutputStream( outputFile); // filename.png, .mp3, .mp4 ...
+            if(outputStream != null){
+                Log.e( "copyFromUri", "Output Stream Opened successfully");
+            }
+
+            byte[] buffer = new byte[1000];
+            int bytesRead = 0;
+            while ( ( bytesRead = inputStream.read( buffer, 0, buffer.length ) ) >= 0 )
+            {
+                outputStream.write( buffer, 0, buffer.length );
+            }
+        } catch ( Exception e ){
+            Log.e( "copyFromUri", "Exception occurred " + e.getMessage());
+        } finally{
+
+        }
+        return outputFile;
+    }
+
 }

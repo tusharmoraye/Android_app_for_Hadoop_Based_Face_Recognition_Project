@@ -26,6 +26,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +40,8 @@ public class ShowImageActivity extends AppCompatActivity {
     Boolean check = true;
     int totalSize = 0;
     String filePath;
-    String ServerUploadPath = "http://192.168.1.134/FaceRec/image_upload.php";
+    final static String IP = "192.168.1.121";
+    String ServerUploadPath = "http://" + IP + "/FaceRec/image_upload.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,11 +172,33 @@ public class ShowImageActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Log.e("response", "Response from server: " + result);
+            //super.onPostExecute(result);
 
             // showing the server response in an alert dialog
-            showAlert(result);
-
+            //showAlert(result);
             super.onPostExecute(result);
+
+
+            //*
+            try {
+                JSONObject obj = new JSONObject(result);
+                if(obj.getBoolean("isuser")) {
+                    Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                    intent.putExtra("response", result);
+                    finish();
+                    startActivity(intent);
+                } else {
+                    showAlert("No entry found");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //*/
+
+            //Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+            //intent.putExtra("response", result);
+            //finish();
+            //startActivity(intent);
         }
 
     }

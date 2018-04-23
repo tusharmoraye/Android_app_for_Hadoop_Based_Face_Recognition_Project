@@ -40,8 +40,8 @@ public class ShowImageActivity extends AppCompatActivity {
     Boolean check = true;
     int totalSize = 0;
     String filePath;
-    final static String IP = "192.168.1.121";
-    String ServerUploadPath = "http://" + IP + "/FaceRec/image_upload.php";
+    final static String IP = "192.168.0.8";
+    String ServerUploadPath = "http://" + IP + "/FaceRec/SearchStore.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.example.tushar.capture.MainActivity"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#BAE3FF">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <Button
             android:id="@+id/cameraButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Capture Photo"
-            android:textAllCaps="false"/>
+            android:textColor="#090909"
+            android:textAllCaps="false" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,8 +37,10 @@
             android:id="@+id/galleryButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose from Galery"
-            android:textAllCaps="false"/>
+            android:text="Choose from Gallery"
+            android:textColor="#090909"
+            android:textAllCaps="false"
+            />
 
     </LinearLayout>
 

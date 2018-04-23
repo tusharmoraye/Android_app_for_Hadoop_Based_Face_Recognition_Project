@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.tushar.capture.ResultActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#BAE3FF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,6 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name : "
+               android:textColor="#090909"
                 android:layout_marginTop="20dp"/>
 
             <TextView
@@ -43,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Address : "
+                android:textColor="#090909"
                 android:layout_marginTop="20dp"/>
         </LinearLayout>
     </LinearLayout>
@@ -61,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="8dp"
-            android:text="Crimes : "/>
+            android:text="Crimes : "
+            android:textColor="#090909"/>
     </LinearLayout>
 </LinearLayout>
